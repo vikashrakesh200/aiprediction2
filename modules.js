@@ -8046,35 +8046,8 @@ const predictNow = (number1, predictWord) => {
         winnePorsion=1
         lossPorsion=0
     }
-    LastPredict = predictWord.toLowerCase();
-    console.log('winne porsion')
-    return LastPredict;
-   }
-   else{
-    if (LastPredict != lastResult) {
-        loss = loss + 1
-        countRs = countRs * 2
-        checklosstime=checklosstime+1
-    }
-    else {
-        if(checklosstime==2){
-            LastPredict = predictWord.toLowerCase();
-            console.log('winne porsion')
-            lossPorsion=0
-            winnePorsion=1
-            return LastPredict;
-        }
-        else{
-            console.log("Winne")
-            Winne = Winne + 1
-            countRs = 5
-            winnePorsion=0
-            lossPorsion=1
-        }
-       
-    }
-    
-
+    if(lossPorsion==1){
+        
         if(predictWord.toLowerCase()=='small'){
             LastPredict= 'big'
         }
@@ -8083,6 +8056,50 @@ const predictNow = (number1, predictWord) => {
         }
         console.log('loss porsion')
         return LastPredict;
+    }
+   else{
+    LastPredict = predictWord.toLowerCase();
+    console.log('winne porsion')
+    return LastPredict;
+   }
+   }
+   else{
+    if (LastPredict != lastResult) {
+        loss = loss + 1
+        countRs = countRs * 2
+        if(checklosstime==1){
+            lossPorsion=0
+            winnePorsion=1
+        }
+        checklosstime=1
+    }
+    else {
+            console.log("Winne")
+            Winne = Winne + 1
+            countRs = 5
+            winnePorsion=0
+            lossPorsion=1
+            checklosstime=0
+        }
+    if(lossPorsion==1){
+        if(predictWord.toLowerCase()=='small'){
+            LastPredict= 'big'
+        }
+        else{
+            LastPredict ='small'
+        }
+        console.log('loss porsion')
+        return LastPredict;
+    }
+    else{
+        LastPredict = predictWord.toLowerCase();
+        console.log('winne porsion')
+        lossPorsion=0
+        winnePorsion=1
+        return LastPredict;
+    }
+
+        
  
    }
 
