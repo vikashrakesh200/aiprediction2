@@ -8067,11 +8067,12 @@ const predictNow = (number1, predictWord) => {
     if (LastPredict != lastResult) {
         loss = loss + 1
         countRs = countRs * 2
-        if(checklosstime==1){
+        checklosstime=checklosstime+1
+        if(checklosstime==2){
             lossPorsion=0
             winnePorsion=1
         }
-        checklosstime=1
+        
     }
     else {
             console.log("Winne")
@@ -8079,7 +8080,7 @@ const predictNow = (number1, predictWord) => {
             countRs = 5
             winnePorsion=0
             lossPorsion=1
-            checklosstime=0
+           
         }
     if(lossPorsion==1){
         if(predictWord.toLowerCase()=='small'){
