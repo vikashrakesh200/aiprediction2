@@ -23,6 +23,8 @@ let LastPredict;
 let lastResult; 
 let Winne=0;
 let loss=0;
+let winnePorsion=0;
+let lossPorsion=0;
 let data1=[
     "Small",
     "Big",
@@ -8025,29 +8027,66 @@ let data1=[
     "Big",
     "Small"
 ]
-const predictNow = (number1,predictWord)=>{
-    lastResult=bedarray[number1] 
+let checklosstime=0;
+const predictNow = (number1, predictWord) => {
+    lastResult = bedarray[number1]
+   
+   if(winnePorsion==1){
+    if (LastPredict != lastResult) {
+        loss = loss + 1
+        countRs = countRs * 2
+        winnePorsion=0
+        lossPorsion=1
+        checklosstime=0
+    }
+    else {
+        console.log("Winne")
+        Winne = Winne + 1
+        countRs = 5
+        winnePorsion=1
+        lossPorsion=0
+    }
+    LastPredict = predictWord.toLowerCase();
+    console.log('winne porsion')
+    return LastPredict;
+   }
+   else{
+    if (LastPredict != lastResult) {
+        loss = loss + 1
+        countRs = countRs * 2
+        checklosstime=checklosstime+1
+    }
+    else {
+        if(checklosstime==2){
+            LastPredict = predictWord.toLowerCase();
+            console.log('winne porsion')
+            lossPorsion=0
+            winnePorsion=1
+            return LastPredict;
+        }
+        else{
+            console.log("Winne")
+            Winne = Winne + 1
+            countRs = 5
+            winnePorsion=0
+            lossPorsion=1
+        }
+       
+    }
+    
 
-//check last bed is win or loss
-console.log("LastPredict:",LastPredict,"lastResult",lastResult)
-if(LastPredict!=lastResult){
-    console.log("Winne")
-    Winne=Winne+1
-   countRs=5
+        if(predictWord.toLowerCase()=='small'){
+            LastPredict= 'big'
+        }
+        else{
+            LastPredict ='small'
+        }
+        console.log('loss porsion')
+        return LastPredict;
+ 
+   }
 
-
-//console.log("Loss")
-//console.log("Bet Rs",countRs)
-}
-else{
-    loss=loss+1
-    countRs=countRs*2
-//console.log("Bet Rs",countRs)
-}
-//console.log("times of Winne:",Winne,"tims of loss:",loss)
-LastPredict= predictWord.toLowerCase();
-//console.log("Bed on",LastPredict)
-return LastPredict;
+   
 //end............................
 }
 const findPatterns = (data, patternLength)=> {
@@ -8169,7 +8208,7 @@ const getData = async () => {
                         };
                         return ResultData;
                     }
-                    return;
+                 
                 } else {
                     match = 0;
                     //console.log("not match")
