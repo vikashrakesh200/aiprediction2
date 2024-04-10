@@ -8078,7 +8078,7 @@ const predictNow = (number1, predictWord) => {
     else {
             console.log("Winne")
             Winne = Winne + 1
-            countRs = 5
+            countRs = 2
             winnePorsion=0
             lossPorsion=1
            
