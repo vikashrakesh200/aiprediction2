@@ -16,16 +16,23 @@ const mysql = require('mysql2');
 //   console.log('Database connected successfully using Poollll!!!!');
 //   connection.release();
 // });
-let bedarray=["small","small","small","small","small","big","big","big","big","big"]
-let bedarray1=["small","big","big","big","big","big","small","small","small","small"]
-let countRs=2
-let LastPredict; 
-let lastResult; 
-let Winne=0;
-let loss=0;
-let winnePorsion=0;
-let lossPorsion=0;
-let data1=[
+let bedarray = ["small", "small", "small", "small", "small", "big", "big", "big", "big", "big"]
+let countRs = 5
+let LastPredict;
+let lastResult;
+let Winne = 0;
+let loss = 0;
+let winnePorsion = 1;
+let lossPorsion = 0;
+let a={
+    'big':'big',
+    'small':'small'
+}
+b={
+    'big':'small',
+    'small':'big'
+}
+let data1 = [
     "Small",
     "Big",
     "Big",
@@ -8027,92 +8034,69 @@ let data1=[
     "Big",
     "Small"
 ]
-let checklosstime=0;
+
 const predictNow = (number1, predictWord) => {
-    lastResult = bedarray[number1]
-   
-   if(winnePorsion==1){
-    if (LastPredict != lastResult) {
-        loss = loss + 1
-        countRs = countRs * 2
-        winnePorsion=0
-        lossPorsion=1
-        checklosstime=0
-    }
-    else {
-        console.log("Winne")
-        Winne = Winne + 1
-        countRs = 2
-        winnePorsion=1
-        lossPorsion=0
-    }
-    if(lossPorsion==1){
-        
-        if(predictWord.toLowerCase()=='small'){
-            LastPredict= 'big'
-            console.log('loss porsion')
-            return LastPredict;
-        }
-        else{
-            LastPredict ='small'
-            console.log('loss porsion')
-            return LastPredict;
-        }
-      
-      
-    }
-   else{
-    LastPredict = predictWord.toLowerCase();
-    console.log('winne porsion')
-    return LastPredict;
-   }
-   }
-   else{
-    if (LastPredict != lastResult) {
-        loss = loss + 1
-        countRs = countRs * 2
-        checklosstime=checklosstime+1
-        lossPorsion=0
-        winnePorsion=1
-}
-    else {
-            console.log("Winne")
-            Winne = Winne + 1
-            countRs = 2
+    lastResult = bedarray[number1];
+
+    if (winnePorsion == 1 && lossPorsion == 0) {
+        console.log("porsion A............")
+        if (LastPredict != lastResult) {
+            loss = loss + 1;
+            countRs = countRs * 2;
+            lossPorsion = 1;
             winnePorsion=0
-            lossPorsion=1
-           
+        } else {
+            console.log("Winne");
+            Winne = Winne + 1;
+            countRs = 5;
         }
-    if(lossPorsion==1){
-        if(predictWord.toLowerCase()=='small'){
-            LastPredict= 'big'
-            console.log('loss porsion')
-            return LastPredict
-        }
-        else{
-            LastPredict ='small'
-            console.log('loss porsion')
-            return LastPredict;
-        }
-    }
-    else{
+        console.log("lossPorsion:",lossPorsion,"winnePorsion:",winnePorsion)
+       if(winnePorsion==1){
         LastPredict = predictWord.toLowerCase();
-        console.log('winne porsion')
-        lossPorsion=0
-        winnePorsion=1
+        LastPredict = a[LastPredict];
+        console.log('winne porsion is run')
         return LastPredict;
-    }
-
-        
- 
-   }
-
+       }
+       else{
+        LastPredict = predictWord.toLowerCase();
+        LastPredict = b[LastPredict];
+        console.log('loss porsion is run')
+        return LastPredict;
+       }
    
-//end............................
+    } else if (winnePorsion == 0 && lossPorsion == 1) {
+        console.log("porsion B............")
+        if (LastPredict != lastResult) {
+            loss = loss + 1;
+            countRs = countRs * 2;
+            lossPorsion=0
+            winnePorsion=1
+        } else {
+            console.log("Winne");
+            Winne = Winne + 1;
+            countRs = 5;
+        }
+    console.log("lossPorsion:",lossPorsion,"winnePorsion:",winnePorsion)
+     if(lossPorsion==1){
+        LastPredict = predictWord.toLowerCase();
+        LastPredict = b[LastPredict];
+        console.log('loss porsion is run')
+        return LastPredict;
+     }
+     else{
+        LastPredict = predictWord.toLowerCase();
+        LastPredict = a[LastPredict];
+        console.log('winne porsion is run')
+        return LastPredict;
+     }
+    } else {
+        return false;
+    }
 }
-const findPatterns = (data, patternLength)=> {
+
+const findPatterns = (data, patternLength) => {
     const patterns = {};
-    const followingWords = {}; 
+    const followingWords = {};
 
     for (let i = 0; i <= data.length - patternLength; i++) {
         const pattern = data.slice(i, i + patternLength).join(",");
@@ -8126,10 +8110,10 @@ const findPatterns = (data, patternLength)=> {
             followingWords[pattern].push(followingWord);
         }
     }
-    return { patterns, followingWords }; 
+    return { patterns, followingWords };
 }
 const fromUrl = 'https://www.bdginr.in'; // Your custom URL
-const headers= {
+const headers = {
     'Content-Type': 'application/json',
     'Origin': 'https://www.bdginr.in', // Include Origin header
     'Referer': 'https://www.bdginr.in/', // Include Referer header
@@ -8149,11 +8133,11 @@ const headers= {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
     // Add other headers as needed
 }
-let last11Data=[]
+let last11Data = []
 let ResultData;
 const getData = async () => {
     const url = 'https://api.bigdaddygame.cc/api/webapi/GetNoaverageEmerdList';
- 
+
 
     const data = {
         pageSize: 10,
@@ -8188,8 +8172,8 @@ const getData = async () => {
         let number9 = data.data.list[8].number;
         let number10 = data.data.list[9].number;
         let lists = data.data.list;
-        let latest6words=bedarray[number10]+','+bedarray[number9]+','+bedarray[number8]+','+bedarray[number7]+','+bedarray[number6]+','+bedarray[number5]+','+bedarray[number4]+','+bedarray[number3]+','+bedarray[number2]+','+bedarray[number1]
-        let word=bedarray[number1]
+        let latest6words = bedarray[number10] + ',' + bedarray[number9] + ',' + bedarray[number8] + ',' + bedarray[number7] + ',' + bedarray[number6] + ',' + bedarray[number5] + ',' + bedarray[number4] + ',' + bedarray[number3] + ',' + bedarray[number2] + ',' + bedarray[number1]
+        let word = bedarray[number1]
         data1.splice(0, 1);
         data1.push(word);
 
@@ -8207,88 +8191,96 @@ const getData = async () => {
                         let predictResult = predictNow(number1, predictWord);
                         ResultData = {
                             Result: predictResult,
-                            bedRupees:countRs,
+                            bedRupees: countRs,
                             Winne,
-                            loss
-                            };
-                            return ResultData;
-                        } else {
-                            ResultData = {
-                                Result: "Result Not Found",
-                                Winne,
-                                loss
-                            };
-                            return ResultData;
-
-                        }
+                            loss,
+                            winnePorsion,
+                            lossPorsion
+                        };
+                        return ResultData;
                     } else {
                         ResultData = {
                             Result: "Result Not Found",
                             Winne,
-                            loss
+                            loss,
+                        winnePorsion,
+                        lossPorsion
                         };
                         return ResultData;
-                    }
-                 
-                } else {
-                    match = 0;
-                    //console.log("not match")
-                }
-            }
-            if (match == 0) {
-                ResultData = {
-                    Result: "Result Not Found",
-                    Winne,
-                    loss
-                };
-                return ResultData;
-            }
-        } catch (error) {
-            console.error('There was a problem with the fetch operation:', error);
-            throw error; // Propagate the error
-        }
-    };
-  
-    const getSuborddinate = async () => {
-        const url = 'https://api.bigdaddygame.cc/api/webapi/TeamDayReport';
-     
-    
-        const data = {
-            "pageNo": 1,
-            "pageSize": 10,
-            "lv": -1,
-            "day": "2024-03-24 00:00:00",
-            "userId": null,
-            "language": 0,
-            "random": "88ac321356aa48dcab3d4aea6bbe9bcb",
-            "signature": "FA121B19883C78BB1B480A180CA92534",
-            "timestamp": 1711342955
-        }
-    
-        const options = {
-            method: 'POST',
-            headers,
-            body: JSON.stringify(data)
-        };
-    
-        try {
-            const response = await fetch(url, options);
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const data = await response.json();
-           
-            } catch (error) {
-                console.error('There was a problem with the fetch operation:', error);
-                throw error; // Propagate the error
-            }
-        };
-        
- 
-module.exports={
 
-  getData,
-  ResultData,
-  last11Data,
-  getSuborddinate
+                    }
+                } else {
+                    ResultData = {
+                        Result: "Result Not Found",
+                        Winne,
+                        loss,
+                        winnePorsion,
+                        lossPorsion
+                    };
+                    return ResultData;
+                }
+
+            } else {
+                match = 0;
+                //console.log("not match")
+            }
+        }
+        if (match == 0) {
+            ResultData = {
+                Result: "Result Not Found",
+                Winne,
+                loss,
+                winnePorsion,
+                lossPorsion
+            };
+            return ResultData;
+        }
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+        throw error; // Propagate the error
+    }
+};
+
+const getSuborddinate = async () => {
+    const url = 'https://api.bigdaddygame.cc/api/webapi/TeamDayReport';
+
+
+    const data = {
+        "pageNo": 1,
+        "pageSize": 10,
+        "lv": -1,
+        "day": "2024-03-24 00:00:00",
+        "userId": null,
+        "language": 0,
+        "random": "88ac321356aa48dcab3d4aea6bbe9bcb",
+        "signature": "FA121B19883C78BB1B480A180CA92534",
+        "timestamp": 1711342955
+    }
+
+    const options = {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(data)
+    };
+
+    try {
+        const response = await fetch(url, options);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+        throw error; // Propagate the error
+    }
+};
+
+
+module.exports = {
+
+    getData,
+    ResultData,
+    last11Data,
+    getSuborddinate
 }
