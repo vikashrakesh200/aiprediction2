@@ -8050,12 +8050,16 @@ const predictNow = (number1, predictWord) => {
         
         if(predictWord.toLowerCase()=='small'){
             LastPredict= 'big'
+            console.log('loss porsion')
+            return LastPredict;
         }
         else{
             LastPredict ='small'
+            console.log('loss porsion')
+            return LastPredict;
         }
-        console.log('loss porsion')
-        return LastPredict;
+      
+      
     }
    else{
     LastPredict = predictWord.toLowerCase();
@@ -8068,12 +8072,9 @@ const predictNow = (number1, predictWord) => {
         loss = loss + 1
         countRs = countRs * 2
         checklosstime=checklosstime+1
-        if(checklosstime==2){
-            lossPorsion=0
-            winnePorsion=1
-        }
-        
-    }
+        lossPorsion=0
+        winnePorsion=1
+}
     else {
             console.log("Winne")
             Winne = Winne + 1
@@ -8085,12 +8086,14 @@ const predictNow = (number1, predictWord) => {
     if(lossPorsion==1){
         if(predictWord.toLowerCase()=='small'){
             LastPredict= 'big'
+            console.log('loss porsion')
+            return LastPredict
         }
         else{
             LastPredict ='small'
+            console.log('loss porsion')
+            return LastPredict;
         }
-        console.log('loss porsion')
-        return LastPredict;
     }
     else{
         LastPredict = predictWord.toLowerCase();
