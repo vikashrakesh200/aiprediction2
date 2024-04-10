@@ -18,7 +18,7 @@ const mysql = require('mysql2');
 // });
 let bedarray=["small","small","small","small","small","big","big","big","big","big"]
 let bedarray1=["small","big","big","big","big","big","small","small","small","small"]
-let countRs=5
+let countRs=2
 let LastPredict; 
 let lastResult; 
 let Winne=0;
@@ -8042,7 +8042,7 @@ const predictNow = (number1, predictWord) => {
     else {
         console.log("Winne")
         Winne = Winne + 1
-        countRs = 5
+        countRs = 2
         winnePorsion=1
         lossPorsion=0
     }
