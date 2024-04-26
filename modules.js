@@ -8172,10 +8172,11 @@ const getData = async () => {
         let number9 = data.data.list[8].number;
         let number10 = data.data.list[9].number;
         let lists = data.data.list;
-        let latest6words = bedarray[number10] + ',' + bedarray[number9] + ',' + bedarray[number8] + ',' + bedarray[number7] + ',' + bedarray[number6] + ',' + bedarray[number5] + ',' + bedarray[number4] + ',' + bedarray[number3] + ',' + bedarray[number2] + ',' + bedarray[number1]
+        //let latest6words = bedarray[number10] + ',' + bedarray[number9] + ',' + bedarray[number8] + ',' + bedarray[number7] + ',' + bedarray[number6] + ',' + bedarray[number5] + ',' + bedarray[number4] + ',' + bedarray[number3] + ',' + bedarray[number2] + ',' + bedarray[number1]
+        let latest6words = bedarray[number1] + ',' + bedarray[number2] + ',' + bedarray[number3] + ',' + bedarray[number4] + ',' + bedarray[number5] + ',' + bedarray[number6] + ',' + bedarray[number7] + ',' + bedarray[number8] + ',' + bedarray[number9] + ',' + bedarray[number10]
         let word = bedarray[number1]
-        data1.splice(0, 1);
-        data1.push(word);
+        // data1.splice(0, 1);
+        // data1.push(word);
 
         const { patterns: patterns6, followingWords: followingWords6 } = findPatterns(data1, 10);
         for (key in followingWords6) {
