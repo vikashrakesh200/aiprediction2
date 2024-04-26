@@ -17,7 +17,7 @@ const mysql = require('mysql2');
 //   connection.release();
 // });
 let bedarray = ["small", "small", "small", "small", "small", "big", "big", "big", "big", "big"]
-let countRs = 2
+let countRs = 5
 let LastPredict;
 let lastResult;
 let Winne = 0;
@@ -8048,7 +8048,7 @@ const predictNow = (number1, predictWord) => {
         } else {
             console.log("Winne");
             Winne = Winne + 1;
-            countRs = 2;
+            countRs = 5;
         }
         console.log("lossPorsion:",lossPorsion,"winnePorsion:",winnePorsion)
        if(winnePorsion==1){
@@ -8074,7 +8074,7 @@ const predictNow = (number1, predictWord) => {
         } else {
             console.log("Winne");
             Winne = Winne + 1;
-            countRs = 2;
+            countRs = 5;
         }
     console.log("lossPorsion:",lossPorsion,"winnePorsion:",winnePorsion)
      if(lossPorsion==1){
